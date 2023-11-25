@@ -4,7 +4,7 @@
 namespace mush {
 
 class EGrandPrixID {
-
+  public:
     enum GrandPrixID {
         MUSHROOM = 0,
         SHELL,
@@ -34,10 +34,14 @@ class EGrandPrixID {
     inline bool isDLC() {
         return this->id >= DLC02;
     }
+
+    bool operator==(const EGrandPrixID& rhs) const {
+        return (id == rhs.id);
+    }
 };
 
 class ECourseID {
-
+  public:
     int id;
 
   public:
@@ -47,6 +51,10 @@ class ECourseID {
 
     inline int operator*() {
         return this->id;
+    }
+
+    bool operator==(const ECourseID& rhs) const {
+        return (id == rhs.id);
     }
 };
 
