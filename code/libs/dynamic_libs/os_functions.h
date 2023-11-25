@@ -183,6 +183,7 @@ extern void (* OSGetArgcArgv)(s32* argc, char*** argv);
 extern void (* __Exit)(void);
 extern void (* OSFatal)(const char* msg);
 extern void (* OSReport)(const char * format, ...);
+extern void (* OSPanic)(const char* file, u32 line, const char* fmt, ...);
 extern void (* OSConsoleWrite)(const char *msg, s32 size);
 extern void (* DCFlushRange)(const void *addr, u32 length);
 extern void (* DCStoreRange)(const void *addr, u32 length);

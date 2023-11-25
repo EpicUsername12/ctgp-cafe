@@ -95,6 +95,7 @@ EXPORT_DECL(void, OSGetArgcArgv, s32* argc, char*** argv);
 EXPORT_DECL(void, __Exit, void);
 EXPORT_DECL(void, OSFatal, const char* msg);
 EXPORT_DECL(void, OSReport, const char * format, ...);
+EXPORT_DECL(void, OSPanic, const char* file, u32 line, const char* fmt, ...);
 EXPORT_DECL(void, OSConsoleWrite, const char *msg, s32 size);
 EXPORT_DECL(void *, OSSetExceptionCallback, u8 exceptionType, exception_callback newCallback);
 EXPORT_DECL(void *, OSSetExceptionCallbackEx, s32 unkwn, u8 exceptionType, exception_callback newCallback);
@@ -275,6 +276,7 @@ void InitOSFunctionPointers(void) {
     //!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     OS_FIND_EXPORT(coreinit_handle, OSFatal);
     OS_FIND_EXPORT(coreinit_handle, OSReport);
+    OS_FIND_EXPORT(coreinit_handle, OSPanic);
     OS_FIND_EXPORT(coreinit_handle, OSConsoleWrite);
     OS_FIND_EXPORT(coreinit_handle, OSGetTitleID);
     OS_FIND_EXPORT(coreinit_handle, OSGetArgcArgv);
