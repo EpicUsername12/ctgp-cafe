@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "PowerPC GHS",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "PLATFORM_IS_EMULATOR",
+                "__VS_CODE__",
+                "cafe"
+            ],
+            "windowsSdkVersion": "10.0.22000.0",
+            "compilerPath": "C:/devkitPro/devkitPPC/bin/powerpc-eabi-gcc.exe",
+            "cStandard": "gnu89",
+            "cppStandard": "c++03",
+            "intelliSenseMode": "gcc-x86"
+        }
+    ],
+    "version": 4
+}

@@ -8,6 +8,7 @@ Variables:
 IncludeDirs:
   - "./libs"
   - "./libs/sead"
+  - "./source"
 Modules:
   - "$PATCHES_DIR/lib_dynamic_libs"
   - "$PATCHES_DIR/init"
