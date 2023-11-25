@@ -1,0 +1,25 @@
+---
+Name: CTGP-Cafe
+WUAPPSVersion: "3.0"
+SourcesBaseDir: "."
+ModulesBaseDir: "."
+Variables:
+  PATCHES_DIR: "./modules"
+IncludeDirs:
+  - "./libs"
+  - "./libs/sead"
+Modules:
+  - "$PATCHES_DIR/lib_dynamic_libs"
+  - "$PATCHES_DIR/init"
+BuildOptions:
+  - "--implicit_typename"
+  - "--diag_suppress 1931,1974,1822"
+  - "--diag_suppress 381"
+  - "-DEPPC"
+MinAlign:
+  .text: 0x20
+  .rodata: 0x100
+  .data: 0x20
+  .bss: 0x100
+Targets:
+  Turbo: ~

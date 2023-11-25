@@ -1,0 +1,3 @@
+MK8_OSDynLoad_Acquire  = 0x0249EAC8;
+MK8_OSDynLoad_FindExport = 0x002A63DA8;
+MK8_MainConstructors = 0x1017F854;
