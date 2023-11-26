@@ -12,6 +12,7 @@ IncludeDirs:
 Modules:
   - "$PATCHES_DIR/lib_dynamic_libs"
   - "$PATCHES_DIR/init"
+  - "$PATCHES_DIR/patch_MessageRedirection"
 BuildOptions:
   - "--implicit_typename"
   - "--diag_suppress 1931,1974,1822"

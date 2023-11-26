@@ -9,6 +9,10 @@ extern InitFunc MK8_MainConstructors[];
 
 OsSpecifics osSpecifics;
 
+void* memcpy(void* dst, const void* src, size_t len) {
+    return OSBlockMove(dst, src, len, 0);
+}
+
 // https://github.com/aboood40091/NSMBU-Haxx-Rewrite/blob/master/haxx/src/ctors.cpp#L22C1-L37C2
 static inline uintptr_t AddrExtractFromInst(const u32* p_instruction) {
     uintptr_t ret = *p_instruction & 0x03FFFFFCu;

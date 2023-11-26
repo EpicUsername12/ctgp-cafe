@@ -17,6 +17,8 @@ _Throw__3stdFRCQ2_3std9exception = 0x2A86510;
 wcslen = 0x02A87C94;
 atoi = 0x02A8AB5C;
 
+snprintf = 0x02A89330;
+
 __pure_virtual_called = 0x02A870D8;
 __deleted_virtual_called = 0x02A87160;
 __vec_new = 0x02A86DD0;

@@ -18,4 +18,4 @@
 #error "Unsupported platform"
 #endif
 
-#define PANIC_UNIMPLEMENTED() PANIC("Unimplemented function %s", __PRETTY_FUNCTION__);
+#define PANIC_UNIMPLEMENTED() PANIC("Unimplemented function %s", __FUNCTION__);
