@@ -11,7 +11,7 @@ namespace ui {
 
 class Page_TitleTop : public UIPage {
   public:
-    static const int ID = 24;
+    static const EUIPageID ID = UIPage::TitleTop;
 
     UIFlow flow;
     Flow_Scene flowScene;

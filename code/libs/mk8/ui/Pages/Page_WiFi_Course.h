@@ -9,7 +9,7 @@
 
 namespace ui {
 
-class Page_CourseWiFi : public Page_CourseVS {
+class Page_WiFi_Course : public Page_CourseVS {
 
   public:
     UIFlow flowCrossFade;
@@ -19,10 +19,10 @@ class Page_CourseWiFi : public Page_CourseVS {
     bool field_408;
 
   public:
-    static const int ID = 63;
+    static const EUIPageID ID = UIPage::WiFi_Course;
 
-    static Page_CourseWiFi* getPage() {
-        return (Page_CourseWiFi*)UIEngine::spInstance->pageManager->getPage(ID);
+    static Page_WiFi_Course* getPage() {
+        return (Page_WiFi_Course*)UIEngine::spInstance->pageManager->getPage(ID);
     }
 
     virtual void onHandler(ui::UIEvent const& event);
@@ -31,6 +31,6 @@ class Page_CourseWiFi : public Page_CourseVS {
 
 } // namespace ui
 
-static_assert(sizeof(ui::Page_CourseWiFi) == 0x40C, "Class doesn't match game class size");
+static_assert(sizeof(ui::Page_WiFi_Course) == 0x40C, "Class doesn't match game class size");
 
 #endif

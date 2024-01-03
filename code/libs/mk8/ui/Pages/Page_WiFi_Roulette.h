@@ -11,10 +11,9 @@
 
 namespace ui {
 
-class Page_CourseRouletteWiFi : public UIPage {
+class UIRoulette {
 
-  public:
-    class SpinnerInfo {
+    class Param {
         int numPlayers;
         int resultPlayerIdx;
         int minimumSpins;
@@ -26,7 +25,7 @@ class Page_CourseRouletteWiFi : public UIPage {
         int finalDelay;
 
       public:
-        SpinnerInfo() {
+        Param() {
             this->numPlayers = 12;
             this->minimumSpins = 38;
             this->resultPlayerIdx = 6;
@@ -39,24 +38,27 @@ class Page_CourseRouletteWiFi : public UIPage {
         }
     };
 
-    class Spinner : public SpinnerInfo {
-        int totalSpins;
-        int currentPlayer;
-        int currentSpin;
-        int spinDelay;
-        int timer;
+    Param param;
+    int totalSpins;
+    int currentPlayer;
+    int currentSpin;
+    int spinDelay;
+    int timer;
 
-      public:
-        Spinner() {
-            this->timer = 0;
-            this->totalSpins = 0;
-            this->spinDelay = 0;
-            this->currentPlayer = 0;
-            this->currentSpin = 0;
-        }
-    };
+  public:
+    UIRoulette() {
+        this->timer = 0;
+        this->totalSpins = 0;
+        this->spinDelay = 0;
+        this->currentPlayer = 0;
+        this->currentSpin = 0;
+    }
+};
 
-    static const int ID = 65;
+class Page_WiFi_Roulette : public UIPage {
+
+  public:
+    static const EUIPageID ID = UIPage::WiFi_Roulette;
 
     Flow_Scene flowScene0;
     UIFlow flowIn0; // ui::Flow_In
@@ -66,7 +68,7 @@ class Page_CourseRouletteWiFi : public UIPage {
     int lobbyListWin;
     nw::lyt::Pane* tMessagePane;
     sead::FixedPtrArray<Control_CourseRoulette, 12> rouletteBtns;
-    Spinner spinner;
+    UIRoulette spinner;
     int indices[12];
     int indexNum;
     int field_2BC;
@@ -74,15 +76,15 @@ class Page_CourseRouletteWiFi : public UIPage {
 
     virtual void onCreate();
 
-    static Page_CourseRouletteWiFi* getPage() {
-        return (Page_CourseRouletteWiFi*)ui::UIEngine::spInstance->pageManager->getPage(ID);
+    static Page_WiFi_Roulette* getPage() {
+        return (Page_WiFi_Roulette*)ui::UIEngine::spInstance->pageManager->getPage(ID);
     }
 };
 
 } // namespace ui
 
-static_assert(sizeof(ui::Page_CourseRouletteWiFi::SpinnerInfo) == 0x24, "Class doesn't match game class size");
-static_assert(sizeof(ui::Page_CourseRouletteWiFi::Spinner) == 0x38, "Class doesn't match game class size");
-static_assert(sizeof(ui::Page_CourseRouletteWiFi) == 0x2C4, "Class doesn't match game class size");
+static_assert(sizeof(ui::UIRoulette::Param) == 0x24, "Class doesn't match game class size");
+static_assert(sizeof(ui::UIRoulette) == 0x38, "Class doesn't match game class size");
+static_assert(sizeof(ui::Page_WiFi_Roulette) == 0x2C4, "Class doesn't match game class size");
 
 #endif // _UI_PAGE_TITLETOP_H

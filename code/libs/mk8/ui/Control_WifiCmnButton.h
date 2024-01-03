@@ -9,7 +9,7 @@
 #include <mk8/ui/UICapTexture.h>
 #include <mk8/ui/UIInput.h>
 
-#include <mk8/ui/Pages/Page_WifiTop.h>
+#include <mk8/ui/Pages/Page_WiFi_Top.h>
 
 namespace ui {
 class Control_WifiCmnButton : public Control_Button {
@@ -18,7 +18,7 @@ class Control_WifiCmnButton : public Control_Button {
 
   public:
     UICapTexture field_F4;
-    Control_WifiCmnButton(Page_WifiTop* page) {
+    Control_WifiCmnButton(Page_WiFi_Top* page) {
         this->flow = (UIFlow*)&page->flow0;
     }
 

@@ -17,7 +17,7 @@ class Page_CourseVS : public Page_CourseBase {
     UICursorLink* cursorLink; //< Custom cursor link derived class
 
   public:
-    static const int ID = 44;
+    static const EUIPageID ID = UIPage::CourseVS;
 
     static Page_CourseVS* getPage() {
         return (Page_CourseVS*)UIEngine::spInstance->pageManager->getPage(ID);

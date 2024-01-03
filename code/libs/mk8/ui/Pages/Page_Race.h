@@ -80,7 +80,7 @@ class Page_Race : public UIPage {
     void loadTimeControl_(int id);
 
   public:
-    static const int ID = 104;
+    static const EUIPageID ID = UIPage::Race;
 
     static Page_Race* getPage() {
         return (Page_Race*)UIEngine::spInstance->pageManager->getPage(ID);

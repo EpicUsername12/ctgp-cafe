@@ -13,9 +13,7 @@ class Control_Button : public UIControl, public sead::IDisposer {
 
     SEAD_RTTI_OVERRIDE(Control_Button, UIControl)
 
-    enum ESeType {
-        I_HAVE_NO_IDEA = 0,
-    };
+    enum ESeType { Select, Decide, Cancel };
 
   public:
     Input_Key inputKey;

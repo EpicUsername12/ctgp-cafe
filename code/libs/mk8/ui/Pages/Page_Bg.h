@@ -46,7 +46,7 @@ class Page_Bg : public UIPage {
     int field_154;
 
   public:
-    static const int ID = 23;
+    static const EUIPageID ID = UIPage::Bg;
 
     virtual void onCreate();
 

@@ -13,7 +13,7 @@ class Page_CourseGP : public Page_CourseBase {
     SEAD_RTTI_OVERRIDE(Page_CourseGP, UIPage)
 
   public:
-    static const int ID = 43;
+    static const EUIPageID ID = UIPage::CourseGP;
 
     static Page_CourseGP* getPage() {
         return (Page_CourseGP*)UIEngine::spInstance->pageManager->getPage(ID);

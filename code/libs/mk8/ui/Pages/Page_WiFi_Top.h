@@ -11,9 +11,9 @@
 #include <mk8/ui/UIPage.h>
 
 namespace ui {
-class Page_WifiTop : public UIPage {
+class Page_WiFi_Top : public UIPage {
   public:
-    static const int ID = 51;
+    static const EUIPageID ID = UIPage::WiFi_Top;
 
     UIFlow flow0;
     UIFlow flow1;
@@ -21,12 +21,12 @@ class Page_WifiTop : public UIPage {
 
     virtual void onCreate();
 
-    static Page_WifiTop* getPage() {
-        return (Page_WifiTop*)ui::UIEngine::spInstance->pageManager->getPage(ID);
+    static Page_WiFi_Top* getPage() {
+        return (Page_WiFi_Top*)ui::UIEngine::spInstance->pageManager->getPage(ID);
     }
 };
 } // namespace ui
 
-static_assert(sizeof(ui::Page_WifiTop) == 0x104, "Class doesn't match game class size");
+static_assert(sizeof(ui::Page_WiFi_Top) == 0x104, "Class doesn't match game class size");
 
 #endif

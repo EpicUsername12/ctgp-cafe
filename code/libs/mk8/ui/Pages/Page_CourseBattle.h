@@ -16,7 +16,7 @@
 namespace ui {
 class Page_CourseBattle : public UIPage {
   public:
-    static const int ID = 45;
+    static const EUIPageID ID = UIPage::CourseBattle;
 
     Flow_Open m_FlowOpen0;
     UIFlow m_FlowCrossFade;
