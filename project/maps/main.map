@@ -1,0 +1,75 @@
+MK8_OSDynLoad_Acquire  = 0x0249EAC8;
+MK8_OSDynLoad_FindExport = 0x002A63DA8;
+MK8_MainConstructors = 0x1017F854;
+
+__nw__FUi = 0x02721868;
+__nwa__FUi = 0x02721904;
+__nw__FUiPQ2_4sead4Heapi = 0x02721BA8;
+__nwa__FUiPQ2_4sead4Heapi = 0x02721C2C;
+__dl__FPv = 0x02721A98;
+__dla__FPv = 0x02721B20;
+__memzero = 0x2A8C6E8;
+
+_Xran__Q2_3std12_String_baseCFv = 0x02A865AC;
+_Xlen__Q2_3std12_String_baseCFv = 0x02A86AE4;
+_Raise_handler__3std = 0x101A9DFC;
+_Throw__3stdFRCQ2_3std9exception = 0x2A86510;
+wcslen = 0x02A87C94;
+atoi = 0x02A8AB5C;
+
+snprintf = 0x02A89330;
+vsnprintf = 0x02A892D0;
+mbtowc = 0x02A8C754;
+
+__pure_virtual_called = 0x02A870D8;
+__deleted_virtual_called = 0x02A87160;
+__vec_new = 0x02A86DD0;
+__record_needed_destruction = 0x02A87060;
+__gh_udiv64 = 0x02A8CD24;
+__gh_float_printf = 0x02A88524;
+
+/* MK8 constants */
+MK8_gTrackPaths = 0x101AB678;
+
+/* sead::IDisposer */
+__ct__Q2_4sead9IDisposerFv = 0x02739D18;
+__dt__Q2_4sead9IDisposerFv = 0x02739E80;
+
+/* sead::FileDeviceMgr */
+sInstance__Q2_4sead13FileDeviceMgr = 0x1018C7A8;
+tryLoad__Q2_4sead13FileDeviceMgrFRQ3_4sead10FileDevice7LoadArg = 0x02729758;
+
+/* sead::FileDevice */
+__CPR122__tryOpen__Q2_4sead10FileDeviceFPQ2_J12J10FileHandleRCQ2_J12J23SafeStringBase__tm__2_cQ3_J12JJ17J12FileOpenFlagUi = 0x02728624;
+tryClose__Q2_4sead10FileDeviceFPQ2_4sead10FileHandle = 0x0272845C;
+tryGetFileSize__Q2_4sead10FileDeviceFPUiPQ2_4sead10FileHandle = 0x02728AA4;
+tryRead__Q2_4sead10FileDeviceFPUiPQ2_4sead10FileHandlePUcUi = 0x027286E0;
+
+/* sead::Heap */
+tryCreate__Q2_4sead7ExpHeapSFPvUiRCQ2_4sead23SafeStringBase__tm__2_cb = 0x0273A414;
+
+/* sead::HeapMgr */
+sInstancePtr__Q2_4sead7HeapMgr = 0x1018C7EC;
+getCurrentHeap__Q2_4sead7HeapMgrCFv = 0x0273D360;
+setCurrentHeap___Q2_4sead7HeapMgrFPQ2_4sead4Heap = 0x0273D448;
+
+/* sead::SZSDecompressor */
+getDecompSize__Q2_4sead15SZSDecompressorSFPCv = 0x02747644;
+decomp__Q2_4sead15SZSDecompressorSFPvUiPCvT2 = 0x027477D4;
+
+/* nw::lyt */
+LoadTexture__Q2_2nw3lytFPQ3_2nw3lyt11TextureInfoPCvUi = 0x026A10B8;
+__ct__Q3_2nw3lyt12ArcExtractorFv = 0x02695140;
+PrepareArchive__Q3_2nw3lyt12ArcExtractorFPCv = 0x02694F80;
+ConvertPathToEntryID__Q3_2nw3lyt12ArcExtractorFPCc = 0x02695240;
+GetFileFast__Q3_2nw3lyt12ArcExtractorFiPQ3_2nw3lyt11ArcFileInfo = 0x026951C0;
+
+/* sys::SystemEngine */
+getEngine__Q2_3sys12SystemEngineSFv = 0x024CE59C;
+
+/* sys::CommonModuleManager */
+launchErrorViewer__Q2_3sys19CommonModuleManagerFPCQ3_2nn7erreula9AppearArg = 0x024C81E0;
+
+/* ui::UILoader */
+getHeap___Q2_2ui8UILoaderFi = 0x0253CFFC;
+findMessage___Q2_2ui8UILoaderFi = 0x0253D518;

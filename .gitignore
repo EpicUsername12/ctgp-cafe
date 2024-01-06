@@ -1,5 +1,6 @@
 __pycache__
-code/temp
-code/rpxs/*
-code/out
+project/temp
+project/rpxs/*
+project/out
 .vscode/settings.json
+ctgp_distribution

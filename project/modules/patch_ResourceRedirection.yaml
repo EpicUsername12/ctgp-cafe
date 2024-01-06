@@ -1,0 +1,13 @@
+---
+Files:
+  C++:
+    - "$SOURCES_DIR/patch/ResourceRedirection.cpp"
+Hooks:
+  - type: branch
+    instr: bl
+    addr: 0x02694D74
+    func: hook_nw_lyt_GetResourceSub
+  - type: branch
+    instr: bl
+    addr: 0x025395AC
+    func: hook_ui_UIEngineEx_onSetupHeap

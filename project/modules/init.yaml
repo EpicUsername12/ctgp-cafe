@@ -1,0 +1,11 @@
+---
+Files:
+  C++:
+    - $SOURCES_DIR/__init.cpp
+    - $SOURCES_DIR/utils/Filesystem.cpp
+    - $SOURCES_DIR/utils/ErrorManagement.cpp
+Hooks:
+  - type: branch
+    instr: bl
+    addr: 0x026776FC
+    func: call_ctors

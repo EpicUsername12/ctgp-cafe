@@ -1,0 +1,5 @@
+---
+Files:
+  C++:
+    - "$SOURCES_DIR/patch/CourseRedirection.cpp"
+Hooks: ~

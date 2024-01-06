@@ -1,0 +1,5 @@
+---
+Files:
+  C++:
+    - "$SOURCES_DIR/dynamic_libs/os_functions.cpp"
+Hooks: ~
