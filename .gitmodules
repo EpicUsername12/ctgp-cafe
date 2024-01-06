@@ -1,0 +1,3 @@
+[submodule "CLPC"]
+	path = CLPC
+	url = https://github.com/EpicUsername12/CLPC
