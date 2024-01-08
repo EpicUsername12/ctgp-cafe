@@ -36,8 +36,7 @@ void InitResourceRedirection() {
 // Game hooks
 // ============================================================================
 
-extern "C" uint8_t* hook_nw_lyt_GetResourceSub(nw::lyt::ArcExtractor* pArc, const char* pDir, uint32_t type,
-                                               const char* pName, uint32_t* pOutSize) {
+extern "C" uint8_t* hook_nw_lyt_GetResourceSub(nw::lyt::ArcExtractor* pArc, const char* pDir, uint32_t type, const char* pName, uint32_t* pOutSize) {
 
     char typeStr[5];
     memcpy(typeStr, &type, 4);
@@ -74,6 +73,7 @@ extern "C" void hook_ui_UIEngineEx_onSetupHeap(ui::UIEngineEx* _this) {
     _this->onSetupHeap();
 
     InitResourceRedirection();
+    InitCourseRedirection();
 }
 
 } // namespace ctgp

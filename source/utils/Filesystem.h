@@ -19,8 +19,7 @@ namespace fs {
  * @param crashOnError Crash on error (file not found, etc...)
  * @return
  */
-uint8_t* LoadFile(const char* path, size_t* outSize, size_t align, sead::Heap* heap = nullptr,
-                  bool crashOnError = true);
+uint8_t* LoadFile(const char* path, size_t* outSize, size_t align, sead::Heap* heap = nullptr, bool crashOnError = true);
 
 /**
  * @brief Loads a file with the given path and alignment. (open/read/close is done seperately by this function)
