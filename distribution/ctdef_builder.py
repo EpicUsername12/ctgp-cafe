@@ -244,8 +244,8 @@ for i in range(num_cups):
     if len(name) >= 16:
         issue_error(f"Cup name is too long, it must be less than 16 characters")
 
-    if len(icon) >= 48:
-        issue_error(f"Cup icon path is too long, it must be less than 48 characters")
+    if len(icon) >= 128:
+        issue_error(f"Cup icon path is too long, it must be less than 128 characters")
 
     if not os.path.isfile(os.path.join(content_dir, icon)):
         issue_error(f"Cup icon doesn't exist -> {os.path.join(content_dir, icon)}")
@@ -270,7 +270,7 @@ for i in range(num_tracks):
     name = get_dict_entry(tracks[i], "name", parent_key=parent_key, required=True, check_type=str)
     author = get_dict_entry(tracks[i], "author", parent_key=parent_key, required=True, check_type=str)
     directory = get_dict_entry(tracks[i], "directory", parent_key=parent_key, required=True, check_type=str)
-    track_pic = get_dict_entry(tracks[i], "track_pic", parent_key=parent_key, default=f"{directory}/track_pic.bflim", check_type=str)
+    track_pic = get_dict_entry(tracks[i], "track_pic", parent_key=parent_key, default=f"course/{directory}/track_pic.bflim", check_type=str)
 
     track_flags = 0
 
@@ -286,16 +286,16 @@ for i in range(num_tracks):
     if len(directory) >= 32:
         issue_error(f"Track directory is too long, it must be less than 32 characters")
 
-    if len(track_pic) >= 48:
-        issue_error(f"Track picture path is too long, it must be less than 48 characters")
+    if len(track_pic) >= 128:
+        issue_error(f"Track picture path is too long, it must be less than 128 characters")
 
     if not os.path.isdir(os.path.join(content_dir, f"course/{directory}")):
         issue_error(f"Track directory doesn't exist -> {os.path.join(content_dir, directory)}")
 
-    if not os.path.isfile(os.path.join(content_dir, f"course/{track_pic}")):
+    if not os.path.isfile(os.path.join(content_dir, track_pic)):
         issue_error(f"Track picture doesn't exist -> {os.path.join(content_dir, track_pic)}")
 
-    if not check_bflim(os.path.join(content_dir, f"course/{track_pic}"), 304, 256, 0x17):
+    if not check_bflim(os.path.join(content_dir, track_pic), 304, 256, 0x17):
         issue_error(f"Track picture is not a valid BFLIM image (must be 304x256 BC3_UNORM_SRGB) -> {os.path.join(content_dir, track_pic)}")
 
     track_full_name = (retro_name + " " if retro_name else "") + name
@@ -318,7 +318,7 @@ print("===============================================================")
 print()
 try:
 
-    ctdef_filepath = os.path.join(archive_dir, "ctdef.bin")
+    ctdef_filepath = os.path.join(content_dir, "ctdef.bin")
 
     # Write CTINFO header
     output_ctinfo = b"CTIF"
@@ -330,20 +330,22 @@ try:
     # Write CUP0 header
     output_cup0 = b"CUP0"
     output_cup0 += struct.pack(">I", num_cups)
-
     for cup in output_cups:
         output_cup0 += create_utf16be_str(cup["name"], 16)
-        output_cup0 += create_ascii_str(cup["icon"], 48)
-        output_cup0 += struct.pack(">I", len(cup["tracks"]))
+        output_cup0 += create_ascii_str(cup["icon"], 128)
 
+    # Write TRK0 header
+    output_trk0 = b"TRK0"
+    output_trk0 += struct.pack(">I", num_tracks)
+    for cup in output_cups:
         for track in cup["tracks"]:
-            output_cup0 += struct.pack(">I", track["track_flags"])
-            output_cup0 += create_utf16be_str(track["retro_name"] if track["retro_name"] else "", 6)
-            output_cup0 += create_utf16be_str(track["name"], 20)
-            output_cup0 += create_utf16be_str(track["author"], 20)
-            output_cup0 += create_ascii_str(track["directory"], 32)
-            output_cup0 += create_ascii_str(track["track_pic"], 48)
-            output_cup0 = pad_to_round_n(output_cup0, 4)
+            output_trk0 += struct.pack(">I", track["track_flags"])
+            output_trk0 += create_utf16be_str(track["retro_name"] if track["retro_name"] else "", 6)
+            output_trk0 += create_utf16be_str(track["name"], 20)
+            output_trk0 += create_utf16be_str(track["author"], 20)
+            output_trk0 += create_ascii_str(track["directory"], 32)
+            output_trk0 += create_ascii_str(track["track_pic"], 128)
+            output_trk0 = pad_to_round_n(output_trk0, 4)
 
     # Write CTDEF header
     output_ctdef = b"CTDF"
@@ -351,16 +353,14 @@ try:
     output_ctdef = output_ctdef.ljust(0x20, b"\0")
 
     # Write output file
-
     output_file = b""
     output_file += output_ctdef
     output_file += output_ctinfo
     output_file += output_cup0
-
-    compressed_output = zlib.compress(output_file, level=9)
+    output_file += output_trk0
 
     with open(ctdef_filepath, "wb") as f:
-        f.write(compressed_output)
+        f.write(output_file)
 
 except Exception as e:
     issue_error(f"ctdef.bin: Failed building -> {e}")
