@@ -63,6 +63,7 @@ __ct__Q3_2nw3lyt12ArcExtractorFv = 0x02695140;
 PrepareArchive__Q3_2nw3lyt12ArcExtractorFPCv = 0x02694F80;
 ConvertPathToEntryID__Q3_2nw3lyt12ArcExtractorFPCc = 0x02695240;
 GetFileFast__Q3_2nw3lyt12ArcExtractorFiPQ3_2nw3lyt11ArcFileInfo = 0x026951C0;
+Set__Q3_2nw3lyt6TexMapFPCQ3_2nw3lyt11TextureInfo = 0x0269676C;
 
 /* sys::SystemEngine */
 getEngine__Q2_3sys12SystemEngineSFv = 0x024CE59C;
@@ -70,6 +71,36 @@ getEngine__Q2_3sys12SystemEngineSFv = 0x024CE59C;
 /* sys::CommonModuleManager */
 launchErrorViewer__Q2_3sys19CommonModuleManagerFPCQ3_2nn7erreula9AppearArg = 0x024C81E0;
 
+/* sys::SaveDataManager */
+getUserSaveDataPtr__Q2_3sys15SaveDataManagerFUc = 0x024F39B4;
+
 /* ui::UILoader */
 getHeap___Q2_2ui8UILoaderFi = 0x0253CFFC;
 findMessage___Q2_2ui8UILoaderFi = 0x0253D518;
+
+/* ui::UIAnimator */
+play__Q2_2ui10UIAnimatorFif = 0x02530DCC;
+bind__Q2_2ui10UIAnimatorFiRCQ2_4sead23SafeStringBase__tm__2_c = 0x02530B60;
+stop__Q2_2ui10UIAnimatorFif = 0x02530EE0;
+
+/* ui::UIEngine */
+spInstance__Q2_2ui8UIEngine = 0x1018A18C;
+
+/* ui::UIControl */
+onFollowCursor__Q2_2ui9UIControlFPQ2_2ui11Page_Cursori = 0x0253633C;
+__ct__Q2_2ui9UIControlFv = 0x02535DC8;
+__ct__Q2_2ui9Input_KeyFv = 0x0253C2C0;
+createAnimator__Q2_2ui9UIControlFiT1 = 0x0253643C;
+setTexture__Q2_2ui9UIControlFPQ3_2nw3lyt4PanePCQ3_2nw3lyt11TextureInfoUi = 0x02531C54;
+findPane__Q2_2ui9UIControlCFRCQ2_4sead23SafeStringBase__tm__2_c = 0x02531718;
+
+/* ui::UIPage */
+createAnimator__Q2_2ui6UIPageFiPQ2_2ui9UIControlT1 = 0x0253EDA8;
+createControl___Q2_2ui6UIPageFPQ2_2ui9UIControlT1RCQ2_4sead23SafeStringBase__tm__2_c = 0x0253ECF4;
+pushInput__Q2_2ui6UIPageFRQ2_2ui7UIInput = 0x0253F7E4;
+
+/* ui::Control_CupButton */
+__ct__Q2_2ui17Control_CupButtonFb = 0x0257D17C;
+
+/* ui::Page_CourseBase */
+initialize__Q2_2ui15Page_CourseBaseFv = 0x025B9CF8;

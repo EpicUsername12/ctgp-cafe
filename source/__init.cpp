@@ -1,5 +1,6 @@
 #include <cafe.h>
 #include <dynamic_libs/os_functions.h>
+#include <dynamic_libs/nn_act_functions.h>
 
 extern "C" {
 
@@ -46,6 +47,8 @@ extern "C" void call_ctors() {
     OS_SPECIFICS->addr_OSDynLoad_FindExport = AddrExtractFromInst(&MK8_OSDynLoad_FindExport);
 
     InitOSFunctionPointers();
+    InitACTFunctionPointers();
+
     LOG("\n");
     LOG("\n");
     LOG("\n");

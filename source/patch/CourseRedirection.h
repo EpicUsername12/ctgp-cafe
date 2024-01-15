@@ -7,8 +7,17 @@
 #include <string>
 
 #include <heap/seadExpHeap.h>
-#include <mk8/nw/lyt/Texture.h>
 
+#include <mk8/nw/lyt/Texture.h>
+#include <mk8/ui/Pages/Page_Bg.h>
+#include <mk8/ui/Pages/Page_CourseGP.h>
+#include <mk8/ui/Pages/Page_CourseVS.h>
+#include <mk8/ui/Pages/Page_WiFi_Course.h>
+#include <mk8/ui/Deluxe/Control_NXBtnL.h>
+#include <mk8/ui/Deluxe/Control_NXBtnR.h>
+#include <mk8/sys/SystemEngine.h>
+
+#include "utils/AnimatorHelper.h"
 #include "utils/ScopedHeapUsage.h"
 #include "utils/Filesystem.h"
 #include "MessageRedirection.h"
@@ -126,7 +135,7 @@ class CustomTrackManager {
         std::vector<Track> tracks;
     };
 
-    std::vector<Cup> cups;
+    std::vector<Cup> m_cups;
 
     static CustomTrackManager* s_Instance;
     static CustomTrackManager* GetInstance();
@@ -159,5 +168,27 @@ extern sead::ExpHeap* g_CTGPHeap;
 sead::ExpHeap* GetExtensionHeap();
 
 void InitCourseRedirection();
+
+#define DECL_COURSE_HOOK(res, name, code)                                      \
+    extern "C" res hook_Page_CourseVS_##name(ui::Page_CourseGP* _this) {       \
+        code                                                                   \
+    }                                                                          \
+    extern "C" res hook_Page_CourseGP_##name(ui::Page_CourseVS* _this) {       \
+        code                                                                   \
+    }                                                                          \
+    extern "C" res hook_Page_WiFi_Course_##name(ui::Page_WiFi_Course* _this) { \
+        code                                                                   \
+    }
+
+#define DECL_COURSE_HOOK_ARGS(res, name, args, code)                                 \
+    extern "C" res hook_Page_CourseVS_##name(ui::Page_CourseGP* _this, args) {       \
+        code                                                                         \
+    }                                                                                \
+    extern "C" res hook_Page_CourseGP_##name(ui::Page_CourseVS* _this, args) {       \
+        code                                                                         \
+    }                                                                                \
+    extern "C" res hook_Page_WiFi_Course_##name(ui::Page_WiFi_Course* _this, args) { \
+        code                                                                         \
+    }
 
 } // namespace ctgp

@@ -65,15 +65,15 @@ CustomTrackManager::EParseError CustomTrackManager::ParseCUP0Section_V1(const CU
         return CUP0_TOO_MANY_CUPS;
     }
 
-    this->cups.resize(data->num_cups);
+    this->m_cups.resize(data->num_cups);
     for (uint32_t i = 0; i < data->num_cups; i++) {
-        this->cups[i].icon_texture = nullptr;
-        memcpy(this->cups[i].name, data->cups[i].name, sizeof(this->cups[i].name));
-        memcpy(this->cups[i].icon, data->cups[i].icon, sizeof(this->cups[i].icon));
+        this->m_cups[i].icon_texture = nullptr;
+        memcpy(this->m_cups[i].name, data->cups[i].name, sizeof(this->m_cups[i].name));
+        memcpy(this->m_cups[i].icon, data->cups[i].icon, sizeof(this->m_cups[i].icon));
 
-        loadTextureInfo(&this->cups[i].icon_texture, this->cups[i].icon, true);
+        loadTextureInfo(&this->m_cups[i].icon_texture, this->m_cups[i].icon, true);
 
-        MessageRedirector::GetInstance()->addMessage(CUP0_MESSAGE_ID_CUP_NAME(i), this->cups[i].name, false);
+        MessageRedirector::GetInstance()->addMessage(CUP0_MESSAGE_ID_CUP_NAME(i), this->m_cups[i].name, false);
     }
 
     this->m_cup0 = (CUP0Section_V1*)data;
@@ -86,10 +86,10 @@ CustomTrackManager::EParseError CustomTrackManager::ParseTRK0Section_V1(const TR
     }
 
     int currentCup = 0;
-    Cup* cup = &this->cups[currentCup];
+    Cup* cup = &this->m_cups[currentCup];
     for (uint32_t i = 0; i < data->num_tracks; i++) {
-        if (this->cups[currentCup].tracks.size() >= 4) {
-            cup = &this->cups[++currentCup];
+        if (this->m_cups[currentCup].tracks.size() >= 4) {
+            cup = &this->m_cups[++currentCup];
         }
 
         Track track;
@@ -156,6 +156,14 @@ void InitCourseRedirection() {
     if (s_IsCourseRedirectionInitialized)
         return;
 
+    /* Patch save file */
+    sys::SaveDataManager* saveDataMgr = sys::SystemEngine::getEngine()->mSaveDataMgr;
+    void* saveDataPtr = saveDataMgr->getRealUserSaveDataPtr(nn_act_GetSlotNo());
+
+    /* Unlock all 8 base cups */
+    for (int i = 0; i < 8; i++)
+        *saveDataMgr->calculateFlagPtrFromOffset(saveDataPtr, 0x1A28 + i) = 3;
+
     {
         utils::ScopedHeapUsage heapUsage(GetExtensionHeap());
         CustomTrackManager::GetInstance()->ParseDefinitionFile_V1(CTDEF_BIN_FILEPATH);
@@ -177,5 +185,107 @@ sead::ExpHeap* GetExtensionHeap() {
 // ============================================================================
 // Game hooks
 // ============================================================================
+
+struct Page_CourseExtension {
+    ui::Control_CupButton* mUpperCupButtons[6];
+    ui::Control_NXBtnL* mBtnL;
+    ui::Control_NXBtnR* mBtnR;
+    int mCupPage;
+
+    Page_CourseExtension() {
+        for (int i = 0; i < 6; i++)
+            this->mUpperCupButtons[i] = nullptr;
+
+        this->mBtnL = nullptr;
+        this->mBtnR = nullptr;
+        this->mCupPage = 0;
+    }
+};
+
+static Page_CourseExtension* s_PageCourseExtensions = nullptr;
+
+Page_CourseExtension* GetPageCourseExtension(ui::UIPage* page) {
+    if (s_PageCourseExtensions == nullptr) {
+        s_PageCourseExtensions = new Page_CourseExtension[3]();
+    }
+
+    if (page->pageID == ui::UIPage::CourseGP) {
+        return &s_PageCourseExtensions[0];
+    } else if (page->pageID == ui::UIPage::CourseVS) {
+        return &s_PageCourseExtensions[1];
+    } else if (page->pageID == ui::UIPage::WiFi_Course) {
+        return &s_PageCourseExtensions[2];
+    }
+
+    return s_PageCourseExtensions;
+}
+
+#define BACKGROUND_ANIM_IDX_BgColor 6
+#define BACKGROUND_ANIMATOR(idx) (ui::Page_Bg::getPage()->animators[idx])
+
+#define COURSE_ANIM_IDX_CupInOut 6
+#define COURSE_ANIM_IDX_IconVisibility 7
+#define COURSE_ANIM_IDX_BoardColor 8
+#define COURSE_ANIM_IDX_Loop 9
+#define COURSE_ANIM_IDX_BtnDown 10
+
+extern "C" void hook_Page_Bg_onCreate(ui::Page_Bg* _this) {
+    _this->onCreate();
+
+    ui::UIAnimator* animator = CREATE_ANIMATOR(_this, BACKGROUND_ANIM_IDX_BgColor, 1);
+    BIND_ANIM(animator, 0, "BgColor");
+}
+
+extern "C" void hook_Page_Course_initialize(ui::Page_CourseBase* _this) {
+
+    _this->initialize();
+
+    utils::ScopedHeapUsage shu(GetExtensionHeap());
+    Page_CourseExtension* ext = GetPageCourseExtension(_this);
+
+    bool unk = (_this->pageID == ui::Page_CourseGP::ID);
+    for (int i = 0; i < 6; i++) {
+        static const char* s_ExtendedCupPaneNames[] = {
+            "L_CupIcon_12", "L_CupIcon_13", "L_CupIcon_14", "L_CupIcon_15", "L_CupIcon_16", "L_CupIcon_17"
+        };
+
+        ext->mUpperCupButtons[i] = new ui::Control_CupButton(unk);
+        _this->createControl_(ext->mUpperCupButtons[i], _this->mainControl, s_ExtendedCupPaneNames[i]);
+    }
+
+    ext->mBtnL = new ui::Control_NXBtnL(ui::Control_NXBtnL::TEXTURE_L);
+    ext->mBtnR = new ui::Control_NXBtnR(ui::Control_NXBtnR::TEXTURE_R);
+    _this->createControl_(ext->mBtnL, _this->mainControl, "L_LBtn_00");
+    _this->createControl_(ext->mBtnR, _this->mainControl, "L_RBtn_00");
+
+    ui::UIAnimator* animator = _this->createAnimator(COURSE_ANIM_IDX_CupInOut, _this->mainControl, 2);
+    animator->bind(0, "CupIn");
+    animator->bind(1, "CupOut");
+
+    animator = _this->createAnimator(COURSE_ANIM_IDX_IconVisibility, _this->mainControl, 1);
+    animator->bind(0, "ChangeIconVisible");
+
+    animator = _this->createAnimator(COURSE_ANIM_IDX_BoardColor, _this->mainControl, 2);
+    animator->bind(0, "BGBoardChangeWtoB");
+    animator->bind(1, "BGBoardChangeBtoW");
+
+    animator = _this->createAnimator(COURSE_ANIM_IDX_Loop, _this->mainControl, 1);
+    animator->bind(0, "Loop");
+
+    animator = _this->createAnimator(COURSE_ANIM_IDX_BtnDown, _this->mainControl, 2);
+    animator->bind(0, "LBtnDown");
+    animator->bind(1, "RBtnDown");
+
+    static const int s_CupRealIDs[12] = {
+        0, 1, 2, 3, 8, 10, 4, 5, 6, 7, 9, 11, // Nintendo does it like that, but inlined.
+    };
+
+    _this->animators[COURSE_ANIM_IDX_IconVisibility]->stop(0, 1.0f);
+    for (int i = 0; i < 12; i++)
+        _this->cupIcons[i]->animators[2]->stop(0, s_CupRealIDs[i]); // 2 == IconChange
+
+    for (int i = 0; i < 6; i++)
+        ext->mUpperCupButtons[i]->animators[2]->stop(0, i + 12);
+}
 
 } // namespace ctgp

@@ -2,4 +2,22 @@
 Files:
   C++:
     - "$SOURCES_DIR/patch/CourseRedirection.cpp"
-Hooks: ~
+Hooks:
+  # ui::Page_Bg::Page_Bg() | Increase the number of animators from 6 to 7
+  - type: patch
+    addr: 0x025E4904
+    data: 38 00 00 07 # li r0, 6 -> li r0, 7
+  # ui::Page_CourseBase::Page_CourseBase() | Increase the number of animators from 6 to 11
+  - type: patch
+    addr: 0x025B9634
+    data: 38 00 00 0B # li r0, 6 -> li r0, 11
+
+  # ui::Page_Course::onInitialize() | Redirect to our implementation, we will add custom animators and load UI elements
+  - type: branch
+    instr: bl
+    addr: 0x025BA378
+    func: hook_Page_Course_initialize
+  - type: branch
+    instr: bl
+    addr: 0x025BB90C
+    func: hook_Page_Course_initialize
