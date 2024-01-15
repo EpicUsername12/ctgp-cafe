@@ -15,6 +15,7 @@ typedef class UIControl UIControl;
 
 namespace ui {
 typedef class UIPage UIPage;
+typedef class Page_Cursor Page_Cursor;
 } // namespace ui
 
 #include <mk8/ui/UIEvent.h>
@@ -75,7 +76,7 @@ class UIControl {
     }
     virtual void onInput() {
     }
-    virtual void onFollowCursor(void* Page_Cursor, int);
+    virtual void onFollowCursor(Page_Cursor* Page_Cursor, int);
     virtual bool onVisibleCursor() const {
         return 1;
     }

@@ -19,7 +19,7 @@ namespace ui {
 class UIAnimation {
   public:
     nw::lyt::GroupAnimator* groupAnimator;
-    float field_04;
+    float speed;
     int field_08;
 };
 
@@ -31,7 +31,7 @@ class UIAnimator {
 
     void bind(int index, sead::SafeStringBase<char> const& name);
     void play_(int index);
-    void play(int index, float frame);
+    void play(int index, float speed);
     void stop(int index, float frame);
 
     float getFrame() const;
